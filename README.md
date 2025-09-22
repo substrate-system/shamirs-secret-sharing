@@ -204,7 +204,8 @@ const decoded = u8FromString(encoded, 'base64')
 - Threshold must be between 2 and `total`.
 - All shares must be from the same `split` call (same secret length and params).
 - Randomness: coefficients are generated using WebCrypto via
-  `@substrate-system/one-webcrypto` for wide platform compatibility.
+  [`@substrate-system/one-webcrypto`](https://github.com/substrate-system/one-webcrypto)
+  for wide platform compatibility.
 - Performance: linear in secret length and number of shares.
 
 ## FAQ
