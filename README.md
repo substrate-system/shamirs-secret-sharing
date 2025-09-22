@@ -11,7 +11,9 @@
 
 
 [Shamir's Secret Sharing](https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing)
-for the browser.
+for the browser. Take your private key, and split it into multiple "shards", and
+distribute the shards among other devices. The other devices could be your
+friends, or simply other machines that you own.
 
 [See a live demo](https://substrate-system.github.io/shamirs-secret-sharing/)
 
@@ -27,9 +29,9 @@ for the browser.
   * [CommonJS](#commonjs)
   * [Pre-built JS for browsers](#pre-built-js-for-browsers)
 - [API](#api)
-  * [split](#split)
-  * [reconstruct](#reconstruct)
-  * [Share](#share)
+  * [`split`](#split)
+  * [`reconstruct`](#reconstruct)
+  * [`Share`](#share)
 - [Limits and notes](#limits-and-notes)
 - [FAQ](#faq)
 
@@ -116,7 +118,7 @@ import { split, reconstruct, type Share } from '@substrate-system/shamirs-secret
 
 const msg = 'hello shamir'
 const secret = new TextEncoder().encode(msg)
-const shares: Share[] = split(secret, { min: 2, total: 3 })
+const shares:Share[] = split(secret, { min: 2, total: 3 })
 
 const restored = reconstruct([shares[0], shares[2]])
 console.log(new TextDecoder().decode(restored)) // 'hello shamir'
@@ -146,15 +148,15 @@ cp ./node_modules/@substrate-system/shamirs-secret-sharing/dist/index.min.js ./p
 <script type="module" src="./sss.min.js"></script>
 ```
 
-You can also see a complete interactive example in `example/` and the
-[live demo](https://substrate-system.github.io/shamirs-secret-sharing/).
-
 ## API
 
-### split
+### `split`
+
+Return an array of `Share` objects. At least `min` number of distinct
+shares are needed to reconstruct the secret.
 
 ```ts
-function split(
+function split (
   secret:Uint8Array,
   options:{ min:number; total:number }
 ):Share[]
@@ -164,9 +166,11 @@ function split(
 - `options.min`: Threshold k. Must be >= 2 and <= `total`.
 - `options.total`: Number of shares n to generate. Max 254.
 
-Returns `n` `Share` objects. Any `k` or more distinct shares reconstruct the secret.
 
-### reconstruct
+### `reconstruct`
+
+Return the original `Uint8Array` secret. Throws if insufficient
+shares are provided.
 
 ```ts
 function reconstruct(shares:Share[]):Uint8Array
@@ -174,9 +178,7 @@ function reconstruct(shares:Share[]):Uint8Array
 
 - `shares`: An array of shares with the same `threshold` and length.
 
-Returns the original `Uint8Array` secret. Throws if insufficient shares provided.
-
-### Share
+### `Share`
 
 ```ts
 interface Share {
@@ -186,10 +188,7 @@ interface Share {
 }
 ```
 
-Notes:
-- `y` is raw bytes. To display or persist, encode to hex/base64.
-
-Example serialization:
+#### Serialization:
 
 ```ts
 import { toString as u8ToString } from 'uint8arrays/to-string'
@@ -211,8 +210,8 @@ const decoded = u8FromString(encoded, 'base64')
 
 ## FAQ
 
-- How big are shares? &ndash; Exactly the same length as the secret bytes plus small
-  constant metadata (`x`, optional `threshold`).
+- How big are shares? &ndash; Exactly the same length as the secret bytes plus
+  small constant metadata (`x`, optional `threshold`).
 - Can I split strings? &ndash; Yes. Encode to bytes with `TextEncoder`,
   and decode with `TextDecoder` after reconstruction.
 - Is Node supported? &ndash; Yes. Use ESM or CJS as shown above.
