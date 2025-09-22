@@ -72,42 +72,38 @@ and split it into shares. Works in modern browsers and Node 20+.
 import { split, reconstruct } from '@substrate-system/shamirs-secret-sharing'
 
 // In modern browsers and Node 20+, globalThis.crypto is available.
-// For wider compatibility, you can alternatively use:
+// For wider compatibility, you can use:
 // import { webcrypto as crypto } from '@substrate-system/one-webcrypto'
 
 const crypto = globalThis.crypto
 
-async function demo () {
-  // 1) Generate Ed25519 key pair
-  const keyPair = await crypto.subtle.generateKey(
-    { name: 'Ed25519' },
-    true,                 // extractable: we will export the private key
-    ['sign', 'verify']
-  )
+// 1) Generate Ed25519 key pair
+const keypair = await crypto.subtle.generateKey(
+{ name: 'Ed25519' },
+true,                 // extractable: we will export the private key
+['sign', 'verify']
+)
 
-  // 2) Export the private key as PKCS#8 bytes
-  const pkcs8 = await crypto.subtle.exportKey('pkcs8', keyPair.privateKey)
-  const privateKeyBytes = new Uint8Array(pkcs8)
+// 2) Export the private key as PKCS#8 bytes
+const pkcs8 = await crypto.subtle.exportKey('pkcs8', keypair.privateKey)
+const privateKeyBytes = new Uint8Array(pkcs8)
 
-  // 3) Split into 5 shares where any 3 can reconstruct
-  const shares = split(privateKeyBytes, { min: 3, total: 5 })
+// 3) Split into 5 shares where any 3 can reconstruct
+const shares = split(privateKeyBytes, { min: 3, total: 5 })
 
-  // 4) Later, reconstruct from any 3 shares
-  const recovered = reconstruct([shares[0], shares[2], shares[4]])
+// 4) Later, reconstruct from any 3 shares
+const recovered = reconstruct([shares[0], shares[2], shares[4]])
 
-  // 5) (Optional) Import the reconstructed key back to a CryptoKey
-  const importedPrivateKey = await crypto.subtle.importKey(
-    'pkcs8',
-    recovered,
-    { name: 'Ed25519' },
-    true,
-    ['sign']
-  )
+// 5) (Optional) Import the reconstructed key back to a CryptoKey
+const importedPrivateKey = await crypto.subtle.importKey(
+'pkcs8',
+recovered,
+{ name: 'Ed25519' },
+true,
+['sign']
+)
 
-  console.log('Reconstruction successful:', importedPrivateKey instanceof CryptoKey)
-}
-
-demo()
+console.log('Reconstruction successful:', importedPrivateKey instanceof CryptoKey)
 ```
 
 

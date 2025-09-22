@@ -1,9 +1,9 @@
 import { webcrypto } from '@substrate-system/one-webcrypto'
 
 export interface Share {
-  x:number
-  y:Uint8Array
-  threshold?:number
+    x:number
+    y:Uint8Array
+    threshold?:number
 }
 
 const GF256_LOG = new Uint8Array(256)
