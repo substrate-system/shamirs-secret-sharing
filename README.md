@@ -15,10 +15,22 @@ Shamir's Secret Sharing for the browser.
 [See a live demo](https://substrate-system.github.io/shamirs-secret-sharing/)
 
 <details><summary><h2>Contents</h2></summary>
+
 <!-- toc -->
+
+- [install](#install)
+- [API](#api)
+  * [ESM](#esm)
+  * [Common JS](#common-js)
+- [Use](#use)
+  * [JS](#js)
+  * [pre-built JS](#pre-built-js)
+
+<!-- tocstop -->
+
 </details>
 
-## install
+## Install
 
 Installation instructions
 
@@ -26,25 +38,16 @@ Installation instructions
 npm i -S @substrate-system/shamirs-secret-sharing
 ```
 
-## API
-
-This exposes ESM and common JS via [package.json `exports` field](https://nodejs.org/api/packages.html#exports).
-
-### ESM
-```js
-import '@substrate-system/shamirs-secret-sharing'
-```
-
-### Common JS
-```js
-require('@substrate-system/shamirs-secret-sharing')
-```
-
 ## Use
 
 ### JS
 ```js
-import '@substrate-system/shamirs-secret-sharing'
+import {
+    split,
+    reconstruct,
+    type Share
+} from '@substrate-system/shamirs-secret-sharing'
+
 ```
 
 ### pre-built JS
@@ -60,3 +63,4 @@ cp ./node_modules/@substrate-system/shamirs-secret-sharing/dist/index.min.js ./p
 ```html
 <script type="module" src="./sss.min.js"></script>
 ```
+## API
