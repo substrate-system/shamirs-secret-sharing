@@ -72,7 +72,7 @@ and split it into shares. Works in modern browsers and Node 20+.
 import { split, reconstruct } from '@substrate-system/shamirs-secret-sharing'
 
 // In modern browsers and Node 20+, globalThis.crypto is available.
-// For wider compatibility, you can alternatively use:
+// For wider compatibility, you can use:
 // import { webcrypto as crypto } from '@substrate-system/one-webcrypto'
 
 const crypto = globalThis.crypto
