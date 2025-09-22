@@ -10,7 +10,7 @@
 [![license](https://img.shields.io/badge/license-Big_Time-blue?style=flat-square)](LICENSE)
 
 
-`<package description goes here>`
+Shamir's Secret Sharing for the browser.
 
 [See a live demo](https://substrate-system.github.io/shamirs-secret-sharing/)
 
