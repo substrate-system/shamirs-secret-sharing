@@ -217,3 +217,7 @@ const decoded = u8FromString(encoded, 'base64')
 - Is Node supported? &ndash; Yes. Use ESM or CJS as shown above.
 - Is there a demo UI? &ndash; Yes, see `example/` and the hosted demo
   linked above.
+
+## See Also
+
+* [Dark Crystal](https://darkcrystal.pw/dark-crystal-javascript-documentation/)
